@@ -1,5 +1,6 @@
 package com.qkninja.clockhud.client.gui;
 
+import com.qkninja.clockhud.reference.ConfigValues;
 import com.qkninja.clockhud.reference.Textures;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -39,7 +40,7 @@ public class GuiClock extends Gui
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
     {
 
-        if(event.isCancelable() || event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE)
+        if(event.isCancelable() || event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE || !ConfigValues.guiActive)
         {
             return;
         }
