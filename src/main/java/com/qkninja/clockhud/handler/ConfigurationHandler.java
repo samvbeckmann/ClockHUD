@@ -8,9 +8,6 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
-/**
- * Created by Sam on 2014-12-22.
- */
 public class ConfigurationHandler
 {
     public static Configuration configuration;
