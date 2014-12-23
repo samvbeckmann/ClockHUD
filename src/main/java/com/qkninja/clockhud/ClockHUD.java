@@ -1,6 +1,7 @@
 package com.qkninja.clockhud;
 
 import com.qkninja.clockhud.client.handler.KeyInputEventHandler;
+import com.qkninja.clockhud.handler.ConfigurationHandler;
 import com.qkninja.clockhud.proxy.IProxy;
 import com.qkninja.clockhud.reference.Reference;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -27,6 +28,9 @@ public class ClockHUD
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+        FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+
         proxy.registerKeyBindings();
     }
 

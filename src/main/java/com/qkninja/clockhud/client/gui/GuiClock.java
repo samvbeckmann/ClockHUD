@@ -31,7 +31,6 @@ public class GuiClock extends Gui
     private static final int BAR_LENGTH = 200; // 400
     private static final int BAR_HEIGHT = 5; // 10
     private static final int DOT = 5; // 10
-    private static final float SCALE =.7F;
 
     private static final int DAY_TICKS = 24000;
     private static final int NIGHT_TICK = 13000;
@@ -45,9 +44,6 @@ public class GuiClock extends Gui
             return;
         }
 
-        int xPos = 2;
-        int yPos = 2;
-
         this.mc.getTextureManager().bindTexture(Textures.Gui.HUD);
 
         GL11.glEnable(GL11.GL_BLEND);
@@ -56,15 +52,15 @@ public class GuiClock extends Gui
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glScalef(SCALE, SCALE, SCALE);
+        GL11.glScalef(ConfigValues.scale, ConfigValues.scale, ConfigValues.scale);
 
-        this.drawTexturedModalRect(xPos + SUN_WIDTH / 2 - (DOT / 2), yPos + ICON_HEIGHT / 2 - BAR_HEIGHT / 2, 0, 0, BAR_LENGTH, BAR_HEIGHT);
+        this.drawTexturedModalRect(ConfigValues.xCoord + SUN_WIDTH / 2 - (DOT / 2), ConfigValues.yCoord + ICON_HEIGHT / 2 - BAR_HEIGHT / 2, 0, 0, BAR_LENGTH, BAR_HEIGHT);
         if (isDay())
-            this.drawTexturedModalRect(xPos + getScaledTime(), yPos, 0, BAR_HEIGHT, SUN_WIDTH, ICON_HEIGHT);
+            this.drawTexturedModalRect(ConfigValues.xCoord + getScaledTime(), ConfigValues.yCoord, 0, BAR_HEIGHT, SUN_WIDTH, ICON_HEIGHT);
         else
-            this.drawTexturedModalRect(xPos + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(), yPos, SUN_WIDTH, BAR_HEIGHT, MOON_WIDTH, ICON_HEIGHT);
+            this.drawTexturedModalRect(ConfigValues.xCoord + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(), ConfigValues.yCoord, SUN_WIDTH, BAR_HEIGHT, MOON_WIDTH, ICON_HEIGHT);
 
-        GL11.glScalef(1 / SCALE, 1 / SCALE, 1 / SCALE);
+        GL11.glScalef(1 / ConfigValues.scale, 1 / ConfigValues.scale, 1 / ConfigValues.scale);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
