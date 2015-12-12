@@ -2,8 +2,8 @@ package com.qkninja.clockhud.client.gui;
 
 import com.qkninja.clockhud.reference.ConfigValues;
 import com.qkninja.clockhud.reference.Textures;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.world.World;
