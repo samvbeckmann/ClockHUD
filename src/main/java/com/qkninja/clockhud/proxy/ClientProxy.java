@@ -1,6 +1,7 @@
 package com.qkninja.clockhud.proxy;
 
 import com.qkninja.clockhud.client.gui.GuiClock;
+import com.qkninja.clockhud.client.gui.GuiDayCount;
 import com.qkninja.clockhud.client.settings.KeyBindings;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraft.client.Minecraft;
@@ -15,6 +16,7 @@ public class ClientProxy extends CommonProxy
     public void registerRenderers()
     {
         MinecraftForge.EVENT_BUS.register(new GuiClock(mc));
+        MinecraftForge.EVENT_BUS.register(new GuiDayCount(mc));
     }
 
     public void registerKeyBindings()
