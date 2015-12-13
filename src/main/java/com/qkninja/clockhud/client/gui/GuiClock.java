@@ -46,12 +46,6 @@ public class GuiClock extends Gui
 
         this.mc.getTextureManager().bindTexture(Textures.Gui.HUD);
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthMask(false);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glScalef(ConfigValues.scale, ConfigValues.scale, ConfigValues.scale);
 
         this.drawTexturedModalRect(ConfigValues.xCoord + SUN_WIDTH / 2 - (DOT / 2), ConfigValues.yCoord + ICON_HEIGHT / 2 - BAR_HEIGHT / 2, 0, 0, BAR_LENGTH, BAR_HEIGHT);
@@ -61,10 +55,6 @@ public class GuiClock extends Gui
             this.drawTexturedModalRect(ConfigValues.xCoord + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(), ConfigValues.yCoord, SUN_WIDTH, BAR_HEIGHT, MOON_WIDTH, ICON_HEIGHT);
 
         GL11.glScalef(1 / ConfigValues.scale, 1 / ConfigValues.scale, 1 / ConfigValues.scale);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthMask(true);
-
     }
 
     private int getScaledTime()
