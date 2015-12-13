@@ -44,24 +44,21 @@ public class GuiDayCount extends Gui
                 endAnimationTime = currentTime + 3000; // 3 second animation
             }
 
-            float scaleFactor = 2; /* getScaleFactor((endAnimationTime - currentTime) / 3000F); */
+            float scaleFactor = getScaleFactor((endAnimationTime - currentTime) / 3000F);
             String dayString = formDayString();
 
             GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
-
             GL11.glColor4f(1.0F, 1.0F, 1.0F, getOpacityFactor((endAnimationTime - currentTime) / 3000F));
-
 
             ScaledResolution scaled = new ScaledResolution(mc);
 
             mc.fontRendererObj.drawString(dayString,
-                    (int) Math.floor((scaled.getScaledWidth() / 2 -
-                            mc.fontRendererObj.getStringWidth(dayString) * scaleFactor / 2) / scaleFactor),
-                    (int) Math.floor(25 / scaleFactor),
-                    0xffffff);
+                    (scaled.getScaledWidth() / 2 -
+                            mc.fontRendererObj.getStringWidth(dayString) * scaleFactor / 2) / scaleFactor,
+                    scaled.getScaledHeight() / 7 / scaleFactor,
+                    0xffffff, false);
 
             GL11.glScalef(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor);
-
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 
@@ -82,16 +79,16 @@ public class GuiDayCount extends Gui
 
     private float getScaleFactor(float percentRemaining)
     {
-        return 3 - percentRemaining;
+        return 2.5F - percentRemaining / 2;
     }
 
     private float getOpacityFactor(float percentRemaining)
     {
         if (percentRemaining > .8)
-            return (1 - percentRemaining) * 5;
+            return (1 - percentRemaining) * 4;
         else if (percentRemaining < .2)
-            return percentRemaining * 5;
+            return percentRemaining * 4;
         else
-            return 1;
+            return 0.8F;
     }
 }
