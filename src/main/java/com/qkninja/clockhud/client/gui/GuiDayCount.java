@@ -45,6 +45,7 @@ public class GuiDayCount extends Gui
             }
 
             float scaleFactor = 2; /* getScaleFactor((endAnimationTime - currentTime) / 3000F); */
+            String dayString = formDayString();
 
             GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
 
@@ -53,9 +54,9 @@ public class GuiDayCount extends Gui
 
             ScaledResolution scaled = new ScaledResolution(mc);
 
-            mc.fontRendererObj.drawString("Day XXX",
+            mc.fontRendererObj.drawString(dayString,
                     (int) Math.floor((scaled.getScaledWidth() / 2 -
-                            mc.fontRendererObj.getStringWidth("Day XXX") * scaleFactor / 2) / scaleFactor),
+                            mc.fontRendererObj.getStringWidth(dayString) * scaleFactor / 2) / scaleFactor),
                     (int) Math.floor(25 / scaleFactor),
                     0xffffff);
 
@@ -72,6 +73,11 @@ public class GuiDayCount extends Gui
     private boolean isNewDay()
     {
         return Minecraft.getMinecraft().theWorld.getWorldTime() % Reference.DAY_TICKS == Reference.NEW_DAY_TICK;
+    }
+
+    private String formDayString()
+    {
+        return "Day " + Minecraft.getMinecraft().theWorld.getTotalWorldTime() / Reference.DAY_TICKS;
     }
 
     private float getScaleFactor(float percentRemaining)
