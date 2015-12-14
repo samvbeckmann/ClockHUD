@@ -21,6 +21,7 @@ public class GuiDayCount extends Gui
 
     private long endAnimationTime;
     private boolean isRunning;
+    private static final int ANIMATION_TIME = 3000; // 3 second animation
 
     public GuiDayCount(Minecraft mc)
     {
@@ -29,6 +30,11 @@ public class GuiDayCount extends Gui
         this.mc = mc;
     }
 
+    /**
+     * Renders the Day Count on the screen.
+     *
+     * @param event variables associated with the event. Not used in this case.
+     */
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
     {
@@ -41,14 +47,14 @@ public class GuiDayCount extends Gui
             if (!isRunning)
             {
                 isRunning = true;
-                endAnimationTime = currentTime + 3000; // 3 second animation
+                endAnimationTime = currentTime + ANIMATION_TIME;
             }
 
-            float scaleFactor = getScaleFactor((endAnimationTime - currentTime) / 3000F);
+            float scaleFactor = getScaleFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME);
             String dayString = formDayString();
 
             GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, getOpacityFactor((endAnimationTime - currentTime) / 3000F));
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, getOpacityFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME));
 
             ScaledResolution scaled = new ScaledResolution(mc);
 
@@ -58,7 +64,7 @@ public class GuiDayCount extends Gui
                     scaled.getScaledHeight() / 7 / scaleFactor,
                     0xffffff, false);
 
-            GL11.glScalef(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor);
+            GL11.glScalef(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor); // set scale to previous value
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 
@@ -67,21 +73,45 @@ public class GuiDayCount extends Gui
         }
     }
 
+    /**
+     * Tests if it's a new day.
+     *
+     * @return if the dayTime is the specified time of a new day.
+     */
     private boolean isNewDay()
     {
         return Minecraft.getMinecraft().theWorld.getWorldTime() % Reference.DAY_TICKS == Reference.NEW_DAY_TICK;
     }
 
+    /**
+     * Creates the day string based on total world time
+     *
+     * @return String of "Day " + day number
+     */
     private String formDayString()
     {
         return "Day " + Minecraft.getMinecraft().theWorld.getTotalWorldTime() / Reference.DAY_TICKS;
     }
 
+    /**
+     * Gets the factor that the text should be scaled by.
+     * Ensures even scaling throughout the time of the animation.
+     *
+     * @param percentRemaining scaled value between 0-1 indicating percent of the animation remaining.
+     * @return Value evenly scaled between 2 and 2.5 based on input.
+     */
     private float getScaleFactor(float percentRemaining)
     {
         return 2.5F - percentRemaining / 2;
     }
 
+    /**
+     * Gets the opacity at which the text should be displayed.
+     * Handles fade in/out of text.
+     *
+     * @param percentRemaining scaled value between 0-1 indicating percent of the animation remaining.
+     * @return value between 0 and 1. 1 --> Fully visible
+     */
     private float getOpacityFactor(float percentRemaining)
     {
         if (percentRemaining > .8)
