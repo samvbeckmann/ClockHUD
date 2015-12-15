@@ -1,11 +1,11 @@
 package com.qkninja.clockhud.utility;
 
 import com.qkninja.clockhud.reference.Reference;
-import cpw.mods.fml.common.FMLLog;
+import net.minecraftforge.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 
 /**
- * Created by Sam on 2014-12-20.
+ * Helper Methods for logging.
  */
 public class LogHelper
 {
