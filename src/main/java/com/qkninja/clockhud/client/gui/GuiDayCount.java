@@ -5,10 +5,10 @@ import com.qkninja.clockhud.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Renders the day count on the screen after each new day.
@@ -38,8 +38,7 @@ public class GuiDayCount extends Gui
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
     {
-
-        if (ConfigValues.showDayCount && event.type == RenderGameOverlayEvent.ElementType.EXPERIENCE &&
+        if (ConfigValues.showDayCount && event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE &&
                 (isRunning || isNewDay()))
         {
             long currentTime = Minecraft.getSystemTime();
@@ -53,8 +52,8 @@ public class GuiDayCount extends Gui
             float scaleFactor = getScaleFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME);
             String dayString = formDayString();
 
-            GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, getOpacityFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME));
+            GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, getOpacityFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME));
 
             ScaledResolution scaled = new ScaledResolution(mc);
 
@@ -64,8 +63,8 @@ public class GuiDayCount extends Gui
                     scaled.getScaledHeight() / 7 / scaleFactor,
                     0xffffff, false);
 
-            GL11.glScalef(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor); // set scale to previous value
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.scale(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor); // set scale to previous value
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 
             if (currentTime >= endAnimationTime)

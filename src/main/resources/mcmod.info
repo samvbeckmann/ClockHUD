@@ -1,10 +1,10 @@
 [
 {
-  "modid": "ClockHUD",
+  "modid": "clockhud",
   "name": "Clock HUD",
   "description": "A simple clock GUI to check the time.",
-  "version": "1.7.0-1.0",
-  "mcversion": "1.7.10",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": [ "QKninja" ],

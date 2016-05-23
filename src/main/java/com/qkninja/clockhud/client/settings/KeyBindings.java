@@ -6,5 +6,5 @@ import org.lwjgl.input.Keyboard;
 
 public class KeyBindings
 {
-    public static KeyBinding toggle = new KeyBinding(Names.Keys.TOGGLE, Keyboard.KEY_COMMA, Names.Keys.CATEGORY);
+    public static final KeyBinding TOGGLE = new KeyBinding(Names.Keys.TOGGLE, Keyboard.KEY_COMMA, Names.Keys.CATEGORY);
 }

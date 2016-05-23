@@ -3,9 +3,6 @@ package com.qkninja.clockhud.reference;
 import com.qkninja.clockhud.utility.ResourceLocationHelper;
 import net.minecraft.util.ResourceLocation;
 
-/**
- * Created by Sam on 2014-12-20.
- */
 public class Textures
 {
     public static final String RESOURCE_PREFIX = Reference.MOD_ID.toLowerCase() + ":";
