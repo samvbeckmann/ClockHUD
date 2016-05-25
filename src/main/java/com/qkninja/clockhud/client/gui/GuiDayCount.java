@@ -1,12 +1,14 @@
 package com.qkninja.clockhud.client.gui;
 
 import com.qkninja.clockhud.reference.ConfigValues;
+import com.qkninja.clockhud.reference.Names;
 import com.qkninja.clockhud.reference.Reference;
 import com.qkninja.clockhud.utility.Algorithms;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -87,11 +89,11 @@ public class GuiDayCount extends Gui
     /**
      * Creates the day string based on total world time
      *
-     * @return String of "Day " + day number
+     * @return String of "Day: " + day number
      */
     private String formDayString()
     {
-        return "Day " + Minecraft.getMinecraft().theWorld.getTotalWorldTime() / Reference.DAY_TICKS;
+        return I18n.format(Names.Text.DAYCOUNT, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / Reference.DAY_TICKS);
     }
 
     /**

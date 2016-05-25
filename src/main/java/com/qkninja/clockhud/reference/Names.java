@@ -7,4 +7,9 @@ public final class Names
         public static final String CATEGORY = "keys.clockhud.category";
         public static final String TOGGLE = "keys.clockhud.toggle";
     }
+
+    public static final class Text
+    {
+        public static final String DAYCOUNT = "clockhud.daycount";
+    }
 }

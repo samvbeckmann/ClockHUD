@@ -1,3 +1,6 @@
 # Keys
 keys.clockhud.category=Clock HUD
 keys.clockhud.toggle=Toggle Clock
+
+# Text
+clockhud.daycount=Day: %d
