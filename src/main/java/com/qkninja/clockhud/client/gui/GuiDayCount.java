@@ -2,13 +2,14 @@ package com.qkninja.clockhud.client.gui;
 
 import com.qkninja.clockhud.reference.ConfigValues;
 import com.qkninja.clockhud.reference.Reference;
+import com.qkninja.clockhud.utility.Algorithms;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Renders the day count on the screen after each new day.
@@ -38,11 +39,16 @@ public class GuiDayCount extends Gui
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
     {
-
-        if (ConfigValues.showDayCount && event.type == RenderGameOverlayEvent.ElementType.EXPERIENCE &&
+        if (ConfigValues.showDayCount && event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE &&
                 (isRunning || isNewDay()))
         {
             long currentTime = Minecraft.getSystemTime();
+
+            if (isRunning && currentTime >= endAnimationTime)
+            {
+                isRunning = false;
+                return;
+            }
 
             if (!isRunning)
             {
@@ -53,23 +59,18 @@ public class GuiDayCount extends Gui
             float scaleFactor = getScaleFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME);
             String dayString = formDayString();
 
-            GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, getOpacityFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME));
+            GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
 
             ScaledResolution scaled = new ScaledResolution(mc);
 
-            mc.fontRendererObj.drawString(dayString,
-                    (scaled.getScaledWidth() / 2 -
-                            mc.fontRendererObj.getStringWidth(dayString) * scaleFactor / 2) / scaleFactor,
-                    scaled.getScaledHeight() / 7 / scaleFactor,
-                    0xffffff, false);
+            int alpha = Math.max(getOpacityFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME), 5);
+            int color = (alpha << 24) | 0xffffff;
+            float xPos = (scaled.getScaledWidth() - mc.fontRendererObj.getStringWidth(dayString) * scaleFactor) / (2 * scaleFactor);
+            float yPos = scaled.getScaledHeight() / 7 / scaleFactor;
 
-            GL11.glScalef(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor); // set scale to previous value
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            mc.fontRendererObj.drawString(dayString, xPos, yPos, color, false);
 
-
-            if (currentTime >= endAnimationTime)
-                isRunning = false;
+            GlStateManager.scale(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor);
         }
     }
 
@@ -110,15 +111,15 @@ public class GuiDayCount extends Gui
      * Handles fade in/out of text.
      *
      * @param percentRemaining scaled value between 0-1 indicating percent of the animation remaining.
-     * @return value between 0 and 1. 1 --> Fully visible
+     * @return value between 0 and 255, indicating alpha value.
      */
-    private float getOpacityFactor(float percentRemaining)
+    private int getOpacityFactor(float percentRemaining)
     {
         if (percentRemaining > .8)
-            return (1 - percentRemaining) * 4;
+            return (int) (255 * (0.8 - Algorithms.scale(percentRemaining, 0.8, 1, 0, 0.8)));
         else if (percentRemaining < .2)
-            return percentRemaining * 4;
+            return (int) (255 * Algorithms.scale(percentRemaining, 0, 0.2, 0, 0.8));
         else
-            return 0.8F;
+            return (int) (255 * 0.8F);
     }
 }

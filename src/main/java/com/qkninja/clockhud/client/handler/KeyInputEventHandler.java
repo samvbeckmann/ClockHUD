@@ -11,7 +11,7 @@ public class KeyInputEventHandler
 
     private static Key getPressedKeyBinding()
     {
-        if (KeyBindings.toggle.isPressed())
+        if (KeyBindings.TOGGLE.isPressed())
             return Key.TOGGLE;
         else return Key.UNKNOWN;
     }

@@ -5,11 +5,11 @@ import com.qkninja.clockhud.reference.Reference;
 import com.qkninja.clockhud.reference.Textures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
 
 /**
  * Creates the Clock Gui.
@@ -22,7 +22,6 @@ public class GuiClock extends Gui
     public GuiClock(Minecraft mc)
     {
         super();
-
         this.mc = mc;
     }
 
@@ -36,16 +35,15 @@ public class GuiClock extends Gui
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
     {
-
         if (!ConfigValues.guiActive || event.isCancelable() ||
-                event.type != RenderGameOverlayEvent.ElementType.EXPERIENCE)
+                event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE)
         {
             return;
         }
 
         this.mc.getTextureManager().bindTexture(Textures.Gui.HUD);
 
-        GL11.glScalef(ConfigValues.scale, ConfigValues.scale, ConfigValues.scale);
+        GlStateManager.scale(ConfigValues.scale, ConfigValues.scale, ConfigValues.scale);
 
         this.drawTexturedModalRect(ConfigValues.xCoord + SUN_WIDTH / 2 - (DOT / 2),
                 ConfigValues.yCoord + ICON_HEIGHT / 2 - BAR_HEIGHT / 2, 0, 0, BAR_LENGTH, BAR_HEIGHT);
@@ -56,7 +54,7 @@ public class GuiClock extends Gui
             this.drawTexturedModalRect(ConfigValues.xCoord + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(),
                     ConfigValues.yCoord, SUN_WIDTH, BAR_HEIGHT, MOON_WIDTH, ICON_HEIGHT);
 
-        GL11.glScalef(1 / ConfigValues.scale, 1 / ConfigValues.scale, 1 / ConfigValues.scale);
+        GlStateManager.scale(1 / ConfigValues.scale, 1 / ConfigValues.scale, 1 / ConfigValues.scale);
     }
 
     private int getScaledTime()
