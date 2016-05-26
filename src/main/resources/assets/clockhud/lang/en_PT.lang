@@ -1,0 +1,6 @@
+# Keys
+keys.clockhud.category=Clock HUD
+keys.clockhud.toggle=Toggles the Clock, Savvy?
+
+# Text
+clockhud.daycount=Days at Sea: %d
