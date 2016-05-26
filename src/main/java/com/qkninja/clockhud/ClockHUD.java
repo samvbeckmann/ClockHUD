@@ -2,7 +2,7 @@ package com.qkninja.clockhud;
 
 import com.qkninja.clockhud.client.handler.KeyInputEventHandler;
 import com.qkninja.clockhud.handler.ConfigurationHandler;
-import com.qkninja.clockhud.proxy.IProxy;
+import com.qkninja.clockhud.proxy.CommonProxy;
 import com.qkninja.clockhud.reference.Reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +21,7 @@ public class ClockHUD
     public static ClockHUD instance;
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    public static IProxy proxy;
+    public static CommonProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -29,13 +29,13 @@ public class ClockHUD
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 
-        proxy.registerKeyBindings();
+        proxy.preInit();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-        proxy.registerRenderers();
+        proxy.init();
 
         MinecraftForge.EVENT_BUS.register(new KeyInputEventHandler());
     }

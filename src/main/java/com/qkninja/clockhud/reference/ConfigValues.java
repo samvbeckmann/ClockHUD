@@ -1,5 +1,9 @@
 package com.qkninja.clockhud.reference;
 
+/**
+ * Stores config values for ClockHUD.
+ * Default values are visible here.
+ */
 public class ConfigValues
 {
     public static boolean guiActive = true;

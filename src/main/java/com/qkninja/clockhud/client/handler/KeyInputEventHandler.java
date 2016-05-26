@@ -6,6 +6,9 @@ import com.qkninja.clockhud.reference.Key;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 
+/**
+ * Handles all results for keyboard events.
+ */
 public class KeyInputEventHandler
 {
 

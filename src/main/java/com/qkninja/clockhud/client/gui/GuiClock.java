@@ -13,10 +13,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Creates the Clock Gui.
- * TODO: Clean up this class to better code standards.
  */
 public class GuiClock extends Gui
 {
+    private static final int TEXTURE_SCALE = 2;
+
+    private static final int SUN_WIDTH = 48 / TEXTURE_SCALE;
+    private static final int MOON_WIDTH = 32 / TEXTURE_SCALE;
+    private static final int ICON_HEIGHT = 50 / TEXTURE_SCALE;
+    private static final int BAR_LENGTH = 400 / TEXTURE_SCALE;
+    private static final int BAR_HEIGHT = 10 / TEXTURE_SCALE;
+    private static final int DOT = 10 / TEXTURE_SCALE;
+
     private Minecraft mc;
 
     public GuiClock(Minecraft mc)
@@ -25,45 +33,51 @@ public class GuiClock extends Gui
         this.mc = mc;
     }
 
-    private static final int SUN_WIDTH = 24; // 48
-    private static final int MOON_WIDTH = 16; // 31
-    private static final int ICON_HEIGHT = 25; // 49
-    private static final int BAR_LENGTH = 200; // 400
-    private static final int BAR_HEIGHT = 5; // 10
-    private static final int DOT = 5; // 10
-
+    /**
+     * Renders the clock GUI on the screen.
+     *
+     * @param event Variables associated with the event.
+     */
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)
     {
-        if (!ConfigValues.guiActive || event.isCancelable() ||
-                event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE)
-        {
+        if (!ConfigValues.guiActive || event.isCancelable() || event.getType() != RenderGameOverlayEvent.ElementType.EXPERIENCE)
             return;
-        }
 
         this.mc.getTextureManager().bindTexture(Textures.Gui.HUD);
 
         GlStateManager.scale(ConfigValues.scale, ConfigValues.scale, ConfigValues.scale);
 
-        this.drawTexturedModalRect(ConfigValues.xCoord + SUN_WIDTH / 2 - (DOT / 2),
-                ConfigValues.yCoord + ICON_HEIGHT / 2 - BAR_HEIGHT / 2, 0, 0, BAR_LENGTH, BAR_HEIGHT);
-        if (isDay())
+        int startX = ConfigValues.xCoord + SUN_WIDTH / 2 - (DOT / 2);
+        int startY = ConfigValues.yCoord + ICON_HEIGHT / 2 - BAR_HEIGHT / 2;
+
+        // Draw bar
+        this.drawTexturedModalRect(startX, startY, 0, 0, BAR_LENGTH, BAR_HEIGHT);
+
+        if (isDay()) // Draw sun
+        {
             this.drawTexturedModalRect(ConfigValues.xCoord + getScaledTime(), ConfigValues.yCoord, 0, BAR_HEIGHT,
                     SUN_WIDTH, ICON_HEIGHT);
-        else
+        }
+        else // Draw moon
+        {
             this.drawTexturedModalRect(ConfigValues.xCoord + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(),
                     ConfigValues.yCoord, SUN_WIDTH, BAR_HEIGHT, MOON_WIDTH, ICON_HEIGHT);
+        }
 
         GlStateManager.scale(1 / ConfigValues.scale, 1 / ConfigValues.scale, 1 / ConfigValues.scale);
     }
 
+    /**
+     * Scales the current time to the length of the bar.
+     *
+     * @return Integer offset to be used when rendering the sun or moon.
+     */
     private int getScaledTime()
     {
-        World world = Minecraft.getMinecraft().theWorld;
-        long time = world.getWorldInfo().getWorldTime();
-        int currentTime = (int) time % Reference.DAY_TICKS;
+        int currentTime = getCurrentTime();
 
-        if (currentTime >= 0 && currentTime <= Reference.NEW_NIGHT_TICK)
+        if (isDay(currentTime))
         {
             return currentTime * (BAR_LENGTH - DOT) / Reference.NEW_NIGHT_TICK;
         } else
@@ -72,12 +86,36 @@ public class GuiClock extends Gui
         }
     }
 
+    /**
+     * Determines if the world is currently in daytime.
+     *
+     * @return True if it is day, else false.
+     */
     private boolean isDay()
+    {
+        return isDay(getCurrentTime());
+    }
+
+    /**
+     * Determines if the world is currently in daytime.
+     *
+     * @param currentTime current tick of the day.
+     * @return Ture if it is day, else false.
+     */
+    private boolean isDay(int currentTime)
+    {
+        return (currentTime >= 0 && currentTime <= Reference.NEW_NIGHT_TICK);
+    }
+
+    /**
+     * Gets the current time of day.
+     *
+     * @return Current tick of the day.
+     */
+    private int getCurrentTime()
     {
         World world = Minecraft.getMinecraft().theWorld;
         long time = world.getWorldInfo().getWorldTime();
-        int currentTime = (int) time % Reference.DAY_TICKS;
-
-        return (currentTime >= 0 && currentTime <= Reference.NEW_NIGHT_TICK);
+        return  (int) time % Reference.DAY_TICKS;
     }
 }

@@ -8,6 +8,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
+/**
+ * Sets up the config file for ClockHUD.
+ */
 public class ConfigurationHandler
 {
     public static Configuration configuration;

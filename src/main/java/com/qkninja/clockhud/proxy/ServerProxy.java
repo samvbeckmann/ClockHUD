@@ -1,8 +1,26 @@
 package com.qkninja.clockhud.proxy;
 
+/**
+ * Handles the server side of the proxy.
+ */
 public class ServerProxy extends CommonProxy
 {
-    public void registerRenderers() {}
 
-    public void registerKeyBindings() {}
+    @Override
+    public void preInit()
+    {
+       /* NOOP */
+    }
+
+    @Override
+    public void init()
+    {
+        /* NOOP */
+    }
+
+    @Override
+    public void postInit()
+    {
+        /* NOOP */
+    }
 }

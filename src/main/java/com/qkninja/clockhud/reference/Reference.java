@@ -1,5 +1,8 @@
 package com.qkninja.clockhud.reference;
 
+/**
+ * Contains static final variables for reference throughout the mod.
+ */
 public class Reference
 {
     public static final String MOD_ID = "clockhud";

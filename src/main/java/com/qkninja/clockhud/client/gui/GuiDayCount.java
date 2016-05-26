@@ -36,7 +36,7 @@ public class GuiDayCount extends Gui
     /**
      * Renders the Day Count on the screen.
      *
-     * @param event variables associated with the event. Not used in this case.
+     * @param event variables associated with the event.
      */
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onRenderExperienceBar(RenderGameOverlayEvent.Post event)

@@ -7,20 +7,40 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
+/**
+ * Handles the client side of the proxy.
+ */
 public class ClientProxy extends CommonProxy
 {
 
     private Minecraft mc = Minecraft.getMinecraft();
 
-    @Override
-    public void registerRenderers()
+    private void registerRenderers()
     {
         MinecraftForge.EVENT_BUS.register(new GuiClock(mc));
         MinecraftForge.EVENT_BUS.register(new GuiDayCount(mc));
     }
 
-    public void registerKeyBindings()
+    private void registerKeyBindings()
     {
         ClientRegistry.registerKeyBinding(KeyBindings.TOGGLE);
+    }
+
+    @Override
+    public void preInit()
+    {
+        registerKeyBindings();
+    }
+
+    @Override
+    public void init()
+    {
+        registerRenderers();
+    }
+
+    @Override
+    public void postInit()
+    {
+        /* NOOP */
     }
 }
