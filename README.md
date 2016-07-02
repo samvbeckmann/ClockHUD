@@ -12,7 +12,7 @@ I welcome pull requests, especially bug fixes! If you feel so inclined to add a 
 The author of Clock HUD is Sam Beckmann (also known as QK ninja).  
 Clock HUD is licensed under [GPL](http://www.gnu.org/licenses/gpl-3.0.en.html). See the LICENSE file for more details.
 
-**Modpack Policy:** Clock HUD may by used in any modpack, public or private, without my explicit permission. You are required to remove Clock HUD from your modpack at my request.
+**Modpack Policy:** Clock HUD may by used in any modpack, public or private, without my explicit permission.
 
 ### Credits
 Thanks to [GirafiStudios](https://github.com/GirafiStudios) for handling the update to 1.9.4.
