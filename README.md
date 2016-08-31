@@ -1,4 +1,5 @@
 # Clock HUD
+[![](http://cf.way2muchnoise.eu/226364.svg)](https://minecraft.curseforge.com/projects/clock-hud)
 ### What is it?
 Clock HUD is a modification for the game Minecraft that that adds a simple clock to your heads up display.
 ### Use
