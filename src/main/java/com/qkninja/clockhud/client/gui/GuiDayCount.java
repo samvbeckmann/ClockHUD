@@ -83,7 +83,7 @@ public class GuiDayCount extends Gui
      */
     private boolean isNewDay()
     {
-        return Minecraft.getMinecraft().theWorld.getWorldTime() % Reference.DAY_TICKS == Reference.NEW_DAY_TICK;
+        return Minecraft.getMinecraft().world.getWorldTime() % Reference.DAY_TICKS == Reference.NEW_DAY_TICK;
     }
 
     /**
@@ -93,7 +93,7 @@ public class GuiDayCount extends Gui
      */
     private String formDayString()
     {
-        return I18n.format(Names.Text.DAYCOUNT, Minecraft.getMinecraft().theWorld.getTotalWorldTime() / Reference.DAY_TICKS);
+        return I18n.format(Names.Text.DAYCOUNT, Minecraft.getMinecraft().world.getTotalWorldTime() / Reference.DAY_TICKS);
     }
 
     /**

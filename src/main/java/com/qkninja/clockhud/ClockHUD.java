@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
  * A simple clock GUI to make telling the time easier.
  * @author QKninja
  */
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions="[1.9,1.11)", guiFactory = Reference.GUI_FACTORY_CLASS)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions="[1.11,1.12)", guiFactory = Reference.GUI_FACTORY_CLASS)
 public class ClockHUD
 {
     @Mod.Instance(Reference.MOD_ID)

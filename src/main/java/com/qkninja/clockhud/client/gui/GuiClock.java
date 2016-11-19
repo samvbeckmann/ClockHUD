@@ -114,7 +114,7 @@ public class GuiClock extends Gui
      */
     private int getCurrentTime()
     {
-        World world = Minecraft.getMinecraft().theWorld;
+        World world = Minecraft.getMinecraft().world;
         long time = world.getWorldInfo().getWorldTime();
         return  (int) time % Reference.DAY_TICKS;
     }
