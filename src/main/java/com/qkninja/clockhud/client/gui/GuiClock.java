@@ -5,6 +5,7 @@ import com.qkninja.clockhud.reference.Reference;
 import com.qkninja.clockhud.reference.Textures;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -48,7 +49,17 @@ public class GuiClock extends Gui
 
         GlStateManager.scale(ConfigValues.scale, ConfigValues.scale, ConfigValues.scale);
 
-        int startX = ConfigValues.xCoord + SUN_WIDTH / 2 - (DOT / 2);
+        int xCoord;
+        if (ConfigValues.centerClock)
+        {
+            ScaledResolution scaled = new ScaledResolution(mc);
+            xCoord = (int) ((scaled.getScaledWidth() - (BAR_LENGTH + SUN_WIDTH - DOT) * ConfigValues.scale) / (2 * ConfigValues.scale));
+        } else
+        {
+            xCoord = ConfigValues.xCoord;
+        }
+
+        int startX = xCoord + SUN_WIDTH / 2 - (DOT / 2);
         int startY = ConfigValues.yCoord + ICON_HEIGHT / 2 - BAR_HEIGHT / 2;
 
         // Draw bar
@@ -56,12 +67,12 @@ public class GuiClock extends Gui
 
         if (isDay()) // Draw sun
         {
-            this.drawTexturedModalRect(ConfigValues.xCoord + getScaledTime(), ConfigValues.yCoord, 0, BAR_HEIGHT,
+            this.drawTexturedModalRect(xCoord + getScaledTime(), ConfigValues.yCoord, 0, BAR_HEIGHT,
                     SUN_WIDTH, ICON_HEIGHT);
         }
         else // Draw moon
         {
-            this.drawTexturedModalRect(ConfigValues.xCoord + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(),
+            this.drawTexturedModalRect(xCoord + (SUN_WIDTH - MOON_WIDTH) / 2 + getScaledTime(),
                     ConfigValues.yCoord, SUN_WIDTH, BAR_HEIGHT, MOON_WIDTH, ICON_HEIGHT);
         }
 
