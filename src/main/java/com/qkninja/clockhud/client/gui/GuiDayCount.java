@@ -67,10 +67,10 @@ public class GuiDayCount extends Gui
 
             int alpha = Math.max(getOpacityFactor((endAnimationTime - currentTime) / (float) ANIMATION_TIME), 5);
             int color = (alpha << 24) | 0xffffff;
-            float xPos = (scaled.getScaledWidth() - mc.fontRendererObj.getStringWidth(dayString) * scaleFactor) / (2 * scaleFactor);
+            float xPos = (scaled.getScaledWidth() - mc.fontRenderer.getStringWidth(dayString) * scaleFactor) / (2 * scaleFactor);
             float yPos = scaled.getScaledHeight() / 7 / scaleFactor;
 
-            mc.fontRendererObj.drawString(dayString, xPos, yPos, color, false);
+            mc.fontRenderer.drawString(dayString, xPos, yPos, color, false);
 
             GlStateManager.scale(1 / scaleFactor, 1 / scaleFactor, 1 / scaleFactor);
         }
